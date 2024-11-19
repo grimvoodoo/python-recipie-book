@@ -1,167 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grim's Cookbook</title>
     <style>
-        /* General Body Styling for Dark Mode */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #e0e0e0;
-        }
+      /* General Body Styling for Dark Mode */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;
+        color: #e0e0e0;
+      }
 
-        /* Header Styling */
-        header {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            text-align: center;
-            padding: 1em 0;
-            border-bottom: 1px solid #333;
-        }
+      /* Header Styling */
+      header {
+        background-color: #1e1e1e;
+        color: #ffffff;
+        text-align: center;
+        padding: 1em 0;
+        border-bottom: 1px solid #333;
+      }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
+      header h1 {
+        margin: 0;
+        font-size: 2.5em;
+      }
 
-        /* Container for Content */
-        .container {
-            padding: 2em;
-            max-width: 90%;
-            margin: 0 auto;
-        }
+      /* Container for Content */
+      .container {
+        padding: 2em;
+        max-width: 90%;
+        margin: 0 auto;
+      }
 
-        /* Search Box Styling */
-        .search-box {
-            text-align: center;
-            margin: 2em 0;
-        }
+      /* Add New Recipe Button */
+      .add-recipe-btn {
+        display: block;
+        width: fit-content;
+        margin: 0 auto 2em auto;
+        padding: 0.5em 1.5em;
+        background-color: #4caf50;
+        color: #ffffff;
+        font-size: 1.2em;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+      }
 
-        .search-box input[type="text"] {
-            width: 80%;
-            max-width: 400px;
-            padding: 0.5em;
-            font-size: 1.2em;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
+      .add-recipe-btn:hover {
+        background-color: #45a049;
+      }
 
-        .search-box button {
-            padding: 0.5em 1em;
-            font-size: 1.2em;
-            color: #ffffff;
-            background-color: #4caf50;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+      /* Search Box Styling */
+      .search-box {
+        text-align: center;
+        margin: 2em 0;
+      }
 
-        .search-box button:hover {
-            background-color: #45a049;
-        }
+      .search-box input[type="text"] {
+        width: 80%;
+        max-width: 400px;
+        padding: 0.5em;
+        font-size: 1.2em;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+      }
 
-        /* Recent Recipes Table */
-        .recent-recipes {
-            margin: 2em auto;
-            max-width: 100%;
-            overflow-x: auto;
-        }
+      .search-box button {
+        padding: 0.5em 1em;
+        font-size: 1.2em;
+        color: #ffffff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1em 0;
-            background-color: #1e1e1e;
-        }
+      .search-box button:hover {
+        background-color: #45a049;
+      }
 
-        th, td {
-            padding: 1em;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
+      /* Recent Recipes Table */
+      .recent-recipes {
+        margin: 2em auto;
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
-        th {
-            background-color: #333;
-            color: #ffffff;
-            font-weight: bold;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1em 0;
+        background-color: #1e1e1e;
+      }
 
-        tr:hover {
-            background-color: #222;
-        }
+      th,
+      td {
+        padding: 1em;
+        text-align: left;
+        border-bottom: 1px solid #333;
+      }
 
-        td a {
-            color: #4caf50;
-            text-decoration: none;
-            font-size: 1.1em;
-        }
+      th {
+        background-color: #333;
+        color: #ffffff;
+        font-weight: bold;
+      }
 
-        td a:hover {
-            text-decoration: underline;
-        }
+      tr:hover {
+        background-color: #222;
+      }
 
-        td img {
-            width: 120px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
+      td a {
+        color: #4caf50;
+        text-decoration: none;
+        font-size: 1.1em;
+      }
 
-        /* Footer Styling */
-        footer {
-            text-align: center;
-            padding: 1em 0;
-            background-color: #1e1e1e;
-            color: #777;
-            border-top: 1px solid #333;
-        }
+      td a:hover {
+        text-decoration: underline;
+      }
+
+      td img {
+        width: 120px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Footer Styling */
+      footer {
+        text-align: center;
+        padding: 1em 0;
+        background-color: #1e1e1e;
+        color: #777;
+        border-top: 1px solid #333;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Welcome to Grim's Cookbook</h1>
+      <h1>Welcome to Grim's Cookbook</h1>
     </header>
     <div class="container">
-        <div class="search-box">
-            <input type="text" placeholder="Search recipes..." id="recipeSearch">
-            <button onclick="searchRecipes()">Search</button>
-        </div>
-        <div class="recent-recipes">
-            <h2>Top 10 Recently Accessed Recipes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Score</th>
-                        <th>Recipe Name</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for recipe_id, recipe in recipes.items() %}
-                    <tr>
-                        <td>{{ recipe.score }}</td>
-                        <td><a href="{{ url_for('recipe', recipe_id=recipe_id) }}">{{ recipe.title }}</a></td>
-                        <td><img src="{{ recipe.image }}" alt="{{ recipe.title }}"></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <!-- Add New Recipe Button -->
+      <a href="{{ url_for('add_recipe') }}" class="add-recipe-btn"
+        >Add New Recipe</a
+      >
+
+      <div class="search-box">
+        <input type="text" placeholder="Search recipes..." id="recipeSearch" />
+        <button onclick="searchRecipes()">Search</button>
+      </div>
+      <div class="recent-recipes">
+        <h2>Top 10 Recently Accessed Recipes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Recipe Name</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for recipe in recipes %}
+            <tr>
+              <td>{{ recipe.score }}</td>
+              <td>
+                <a href="{{ url_for('recipe', recipe_id=recipe['_id']) }}"
+                  >{{ recipe.title }}</a
+                >
+              </td>
+              <td>
+                <img
+                  src="{{ recipe.image }}"
+                  alt="{{ recipe.title }}"
+                  style="width: 100px; height: auto"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
     <footer>
-        <p>© 2024 Grim's Cookbook. All Rights Reserved.</p>
+      <p>© 2024 Grim's Cookbook. All Rights Reserved.</p>
     </footer>
     <script>
-        function searchRecipes() {
-            const query = document.getElementById("recipeSearch").value;
-            alert(`Searching for: ${query}`);
-        }
+      function searchRecipes() {
+        const query = document.getElementById("recipeSearch").value;
+        alert(`Searching for: ${query}`);
+      }
     </script>
-</body>
+  </body>
 </html>

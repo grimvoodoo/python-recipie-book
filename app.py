@@ -1,43 +1,142 @@
-from flask import Flask, render_template
+import datetime
+import os
+from bson import ObjectId
+import dotenv
+from flask import Flask, redirect, render_template, request, url_for
+from pymongo import MongoClient
 
-recipes = {
-    "toad-in-the-hole": {
-        "title": "Toad in the Hole",
-        "image": "https://realfood.tesco.com/media/images/RFO-472x310-ToadInTheHole-a18fb881-11b0-4205-9a35-f7de8568e72e-0-472x310.jpg",
-        "ingredients": [
-            "8 pork sausages",
-            "2 tbsp vegetable oil",
-            "200g plain flour",
-            "4 large eggs",
-            "300ml milk",
-            "Salt and pepper to taste",
-        ],
-        "score": 10,
-        "serves": 4,
-        "instructions": [
-            "Preheat your oven to 220°C (200°C fan) or 425°F.",
-            "Place the sausages in a large ovenproof dish, drizzle with oil, and bake for 15 minutes until they start to brown.",
-            "While the sausages are cooking, prepare the batter. Whisk together the flour, eggs, milk, and a pinch of salt and pepper until smooth.",
-            "Carefully remove the dish from the oven and pour the batter evenly over the sausages.",
-            "Return to the oven and bake for 25-30 minutes until the batter is golden and risen.",
-            "Serve immediately with onion gravy and vegetables of your choice.",
-        ],
-    },
-    # Add more recipes here
-}
+dotenv.load_dotenv()
+
+# Connect to MongoDB
+client = MongoClient(
+    os.getenv("MONGO_URI")
+)  # Replace with your connection string later
+db = client.cookbook  # Use 'cookbook' database
+recipes_collection = db.recipes  # Use 'recipes' collection
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
-    return render_template('index.html', recipes=recipes)
+    recipes = list(
+        recipes_collection.find({}, {"_id": 1, "title": 1, "image": 1, "score": 1})
+    )
+    print(recipes)
+    return render_template("index.html", recipes=recipes)
 
-@app.route("/recipe/<recipe_id>")
+
+@app.route("/recipe/<recipe_id>", methods=["GET", "POST"])
 def recipe(recipe_id):
-    recipe = recipes.get(recipe_id)
+    if request.method == "POST":
+        # Get form data
+        username = request.form.get("username")
+        comment = request.form.get("comment")
+
+        # Validate required fields
+        if not username or not comment:
+            return "Username and comment are required.", 400
+
+        # Create a new comment document
+        new_comment = {
+            "_id": ObjectId(),
+            "username": username,
+            "timestamp": datetime.datetime.now(),
+            "text": comment,
+        }
+
+        # Update the recipe document with the new comment
+        recipes_collection.update_one(
+            {"_id": recipe_id}, {"$push": {"comments": new_comment}}
+        )
+
+        return redirect(url_for("recipe", recipe_id=recipe_id))
+
+    recipe = recipes_collection.find_one({"_id": recipe_id})
     if not recipe:
         return "Recipe not found", 404
     return render_template("recipe.html", recipe=recipe)
+
+
+@app.route("/delete_comment/<recipe_id>/<comment_id>", methods=["GET", "POST"])
+def delete_comment(recipe_id, comment_id):
+    recipes_collection.update_one(
+        {"_id": recipe_id}, {"$pull": {"comments": {"_id": ObjectId(comment_id)}}}
+    )
+    return redirect(url_for("recipe", recipe_id=recipe_id))
+
+
+@app.route("/edit_comment/<recipe_id>/<comment_id>", methods=["GET", "POST"])
+def edit_comment(recipe_id, comment_id):
+    if request.method == "POST":
+        # Get form data
+        comment = request.form.get("comment")
+
+        # Validate required fields
+        if not comment:
+            return "Comment is required.", 400
+
+        # Update the comment
+        recipes_collection.update_one(
+            {"_id": recipe_id, "comments._id": ObjectId(comment_id)},
+            {"$set": {"comments.$.text": comment}},
+        )
+
+        return redirect(url_for("recipe", recipe_id=recipe_id))
+
+    recipe = recipes_collection.find_one({"_id": recipe_id})
+    comment = next(
+        comment for comment in recipe["comments"] if str(comment["_id"]) == comment_id
+    )
+    return render_template("edit_comment.html", recipe=recipe, comment=comment)
+
+
+@app.route("/add_recipe", methods=["GET", "POST"])
+def add_recipe():
+    if request.method == "POST":
+        # Get form data
+        recipe_name = request.form.get("name")
+        recipe_image = request.form.get("image")
+        recipe_description = request.form.get("description")
+
+        # Get ingredients
+        ingredient_names = request.form.getlist("ingredient_name")
+        ingredient_quantities = request.form.getlist("ingredient_quantity")
+        ingredient_measurements = request.form.getlist("ingredient_measurement")
+        ingredients = []
+        for name, quantity, measurement in zip(
+            ingredient_names, ingredient_quantities, ingredient_measurements
+        ):
+            ingredients.append(f"{quantity} {measurement} {name}")
+
+        # Get instructions
+        instructions = request.form.getlist("instructions")
+
+        # Validate required fields
+        if not recipe_name or not ingredients or not instructions:
+            return (
+                "Name, at least one ingredient, and one instruction are required.",
+                400,
+            )
+
+        # Create a new recipe document
+        new_recipe = {
+            "_id": recipe_name.replace(" ", "-").lower(),
+            "title": recipe_name,
+            "image": recipe_image,
+            "description": recipe_description,
+            "ingredients": ingredients,
+            "instructions": instructions,
+            "score": 0,  # Initialize score to 0
+            "serves": 0,  # Initialize serves to 0
+        }
+
+        # Insert into the database
+        recipes_collection.insert_one(new_recipe)
+        return redirect(url_for("index"))
+
+    return render_template("add_recipe.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
