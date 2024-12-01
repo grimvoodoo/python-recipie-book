@@ -22,6 +22,12 @@ Once all the fields have been filled it then hit the `Add recipe` button. That w
 
 ## Further development
 
+### Authentication
+
+Currently there is no authentication and I would like to add that so the recipe book can be shared around or used in a public setting without strangers mess with your recipies.
+
+### Experimentation
+
 I created this partially becuase I wanted a way to track recipies other than just using bookmarks and partially because I wanted to see if I could make a web based recipie book. I have some improvements I want to add, like a working search function and maybe the ability to search by ingredients.
 
 I have a vague idea of incorporating this into some kind of smart kitchen where you have ingredients kept on scales so the recipie list can auto-filter down what foods you can make based on the ingredients you have available but who knows if I will ever do anything with that.
