@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Grim's Cookbook{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Shared Header -->
+    <header>
+      <div class="header-content">
+        <a href="{{ url_for('index') }}" class="styled-button">Home</a>
+        <form class="search-box" action="/search" method="get">
+          <input
+            type="text"
+            name="query"
+            placeholder="Search recipes..."
+            aria-label="Search"
+          />
+          <button type="submit" class="styled-button">Search</button>
+        </form>
+      </div>
+    </header>
+    <!-- Page-Specific Content -->
+    <main class="container">{% block content %}{% endblock %}</main>
+  </body>
+</html>

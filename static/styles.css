@@ -1,0 +1,308 @@
+/* Fixed Header */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 0.2em 1em; /* Reduced padding for smaller header */
+  height: auto; /* Allow header height to adjust based on content */
+}
+
+/* Header Content */
+header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items vertically */
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 0.5em; /* Ensure header doesn't shrink too much */
+}
+
+/* Links and Buttons Styling */
+header a.home-button,
+header .search-box .search-button {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1em;
+  color: #4caf50;
+  background: none;
+  border: 2px solid #4caf50;
+  padding: 0.2em 0.8em; /* Smaller padding for compact buttons */
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  line-height: 1.5; /* Match the search box's line height */
+  height: 2em; /* Ensure consistent height with the search input */
+  vertical-align: middle; /* Align with input box */
+}
+
+header a.home-button:hover,
+header .search-box .search-button:hover {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+/* Search Box Styling */
+header .search-box {
+  display: flex;
+  align-items: center; /* Align input and button vertically */
+  gap: 0.5em;
+}
+
+header .search-box input[type="text"] {
+  padding: 0.3em 0.5em; /* Reduced padding for smaller input height */
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-size: 1em;
+  line-height: 1.5;
+  height: 2em; /* Same height as buttons */
+  margin: 0; /* Remove unnecessary margin */
+}
+
+header .search-box input[type="text"]:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* General Body Styling for Dark Mode */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #e0e0e0;
+  line-height: 1.6;
+  padding-top: 90px; /* Height of the header */
+}
+
+/* Header Styling */
+header {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  text-align: center;
+  padding: 0;
+  border-bottom: 1px solid #333;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+/* Container for Content */
+.container {
+  max-width: 800px;
+  margin: 2em auto;
+  padding: 2em;
+  background-color: #23272a;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+
+button,
+.styled-button,
+.inline-button,
+.add-recipe-btn,
+.back-button,
+.search-button {
+  display: inline-block;
+  /* margin-top: 2em; */
+  margin: 1em;
+  text-decoration: none;
+  font-size: 1.1em;
+  color: #4caf50;
+  border: 2px solid #4caf50;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #1e1e1e;
+}
+
+button:hover,
+.styled-button:hover,
+.inline-button:hover,
+.add-recipe-btn:hover,
+.back-button:hover,
+.search-button:hover {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+/* Inline Buttons for Delete/Edit */
+.inline-button {
+  margin: 0 0.5em 0 0;
+  padding: 0.3em 0.8em;
+  font-size: 0.9em;
+}
+
+/* Forms */
+label {
+  display: block;
+  margin: 1em 0 0.5em;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Recipe Page */
+.recipe-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1.5em;
+}
+
+.section {
+  margin-bottom: 2em;
+}
+
+.section h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.2em;
+}
+
+/* Lists */
+ul,
+ol {
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+/* Recent Recipes Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  background-color: #1e1e1e;
+}
+
+th,
+td {
+  padding: 1em;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+th {
+  background-color: #333;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #222;
+}
+
+td a {
+  color: #4caf50;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+td img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.search-box input[type="text"] {
+  width: 80%;
+  max-width: 400px;
+  padding: 0.5em;
+  font-size: 1.2em;
+  border-radius: 4px;
+}
+
+/* Dynamic Fields */
+.dynamic-fields {
+  margin-bottom: 1em;
+}
+
+.dynamic-fields div {
+  display: flex;
+  gap: 0.5em;
+}
+
+.dynamic-fields div input {
+  flex: 1;
+}
+
+/* Comments */
+.comments {
+  margin-top: 2em;
+}
+
+.comments h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.2em;
+}
+
+.comment {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #333;
+}
+
+.comment .timestamp {
+  font-size: 0.8em;
+  color: #666;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1em 0;
+  background-color: #1e1e1e;
+  color: #777;
+  border-top: 1px solid #333;
+}
+
+.instructions {
+  white-space: pre-wrap; /* Preserve new lines and ensure text wraps */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  overflow-wrap: break-word; /* For broader browser support */
+  font-family: Arial, sans-serif; /* Apply consistent font */
+  font-size: 1em; /* Match font size to the rest of the site */
+  color: inherit; /* Use the inherited text color */
+  background-color: transparent; /* Ensure no unwanted background color */
+  border: none; /* Remove default border if any */
+  padding: 0; /* Ensure no extra padding */
+  margin: 0; /* Ensure no extra margin */
+}
+
+img {
+  padding: 0.5em;
+}

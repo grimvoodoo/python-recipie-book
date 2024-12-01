@@ -1,183 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add New Recipe</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #2c2f33;
-        color: #ffffff;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        max-width: 800px;
-        margin: 2em auto;
-        padding: 2em;
-        background-color: #23272a;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-      h1 {
-        text-align: center;
-      }
-      label {
-        display: block;
-        margin: 1em 0 0.5em;
-      }
-      input,
-      textarea,
-      button {
-        width: 100%;
-        padding: 0.5em;
-        margin-bottom: 1em;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1em;
-      }
-      button {
-        background-color: #7289da;
-        color: white;
-        cursor: pointer;
-        border: none;
-      }
-      button:hover {
-        background-color: #5b6eae;
-      }
-      .dynamic-fields {
-        margin-bottom: 1em;
-      }
-      .dynamic-fields div {
-        display: flex;
-        gap: 0.5em;
-      }
-      .dynamic-fields div input {
-        flex: 1;
-      }
-      .add-button {
-        width: auto;
-        padding: 0.5em;
-        background-color: #43b581;
-      }
-      .add-button:hover {
-        background-color: #389d6a;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Add a New Recipe</h1>
-      <form action="/add_recipe" method="post">
-        <!-- Section 1: Recipe Name, Image, and Description -->
-        <label for="name">Recipe Name *</label>
-        <input type="text" id="name" name="name" required />
+{% extends "header.html" %} {% block title %}Home - Grim's Cookbook{% endblock
+%} {% block content %}
+<h1>Add a New Recipe</h1>
+<form action="/add_recipe" method="post" id="recipe-form">
+  <!-- Section 1: Recipe Name, Image, and Description -->
+  <label for="name">Recipe Name *</label>
+  <input type="text" id="name" name="name" required />
 
-        <label for="image">Image URL</label>
-        <input type="text" id="image" name="image" />
+  <label for="image">Image URL</label>
+  <input type="text" id="image" name="image" />
 
-        <label for="description">Description</label>
-        <textarea id="description" name="description" rows="3"></textarea>
+  <label for="description">Description</label>
+  <textarea id="description" name="description" rows="3"></textarea>
 
-        <!-- Section 2: Ingredients -->
-        <div class="form-section">
-          <h2>Ingredients</h2>
-          <div id="ingredients-list">
-            <!-- Example Ingredient Row -->
-            <div class="ingredient-row">
-              <input
-                type="text"
-                name="ingredient_name"
-                placeholder="Ingredient Name"
-                required
-              />
-              <input
-                type="text"
-                name="ingredient_quantity"
-                placeholder="Quantity"
-                required
-              />
-              <select name="ingredient_measurement" required>
-                <option value="">Measurement</option>
-                <option value="grams">Grams</option>
-                <option value="kg">Kilograms</option>
-                <option value="ml">Milliliters</option>
-                <option value="liters">Liters</option>
-                <option value="cups">Cups</option>
-                <option value="tsp">Teaspoons</option>
-                <option value="tbsp">Tablespoons</option>
-                <option value="pcs">Pieces</option>
-                <!-- Add more options as needed -->
-              </select>
-              <button
-                type="button"
-                class="remove-ingredient-btn"
-                onclick="removeIngredient(this)"
-              >
-                −
-              </button>
-            </div>
-          </div>
-          <button type="button" id="add-ingredient-btn">
-            + Add Ingredient
-          </button>
-        </div>
+  <label for="serves">How many does it serve</label>
+  <input type="text" id="serves" name="serves" required />
 
-        <!-- Section 3: Instructions -->
-        <label>Instructions *</label>
-        <div class="dynamic-fields" id="instructionFields">
-          <div>
-            <input type="text" name="instructions" required />
-            <button type="button" class="add-button" onclick="addInstruction()">
-              +
-            </button>
-          </div>
-        </div>
+  <label for="score">What is your score out of 5</label>
+  <input type="text" id="score" name="score" required />
 
-        <button type="submit">Add Recipe</button>
-      </form>
+  <!-- Section 2: Ingredients -->
+  <div class="form-section">
+    <h2>Ingredients</h2>
+    <div id="ingredients-list">
+      <!-- Existing Ingredients -->
+      <div class="ingredient-row">
+        <input
+          type="text"
+          name="ingredient_quantity"
+          placeholder="Quantity"
+          required
+        />
+        <select name="ingredient_measurement" required>
+          <option value="">Measurement</option>
+          <option value="grams">Grams</option>
+          <option value="kg">Kilograms</option>
+          <option value="ml">Milliliters</option>
+          <option value="liters">Liters</option>
+          <option value="cups">Cups</option>
+          <option value="tsp">Teaspoons</option>
+          <option value="tbsp">Tablespoons</option>
+          <option value="pcs">Pieces</option>
+        </select>
+        <input
+          type="text"
+          name="ingredient_name"
+          placeholder="Ingredient Name"
+          required
+        />
+
+        <button
+          type="button"
+          class="remove-ingredient-btn"
+          onclick="removeIngredient(this)"
+          tabindex="-1"
+        >
+          −
+        </button>
+      </div>
     </div>
+    <button type="button" id="add-ingredient-btn">+ Add Ingredient</button>
+  </div>
 
-    <script>
-      const addIngredientButton = document.getElementById("add-ingredient-btn");
-      const ingredientsList = document.getElementById("ingredients-list");
+  <!-- Section 3: Instructions -->
+  <label for="instructions">Instructions *</label>
+  <textarea
+    id="instructions"
+    name="instructions"
+    rows="8"
+    placeholder="Write the instructions here, using new lines for each step."
+    required
+  ></textarea>
 
-      addIngredientButton.addEventListener("click", () => {
-        const ingredientRow = document.createElement("div");
-        ingredientRow.className = "ingredient-row";
+  <button type="submit" id="add-recipe-btn">Add Recipe</button>
+</form>
 
-        ingredientRow.innerHTML = `
-                <input type="text" name="ingredient_name" placeholder="Ingredient Name" required />
-                <input type="text" name="ingredient_quantity" placeholder="Quantity" required />
-                <select name="ingredient_measurement" required>
-                    <option value="">Measurement</option>
-                    <option value="grams">Grams</option>
-                    <option value="kg">Kilograms</option>
-                    <option value="ml">Milliliters</option>
-                    <option value="liters">Liters</option>
-                    <option value="cups">Cups</option>
-                    <option value="tsp">Teaspoons</option>
-                    <option value="tbsp">Tablespoons</option>
-                    <option value="pcs">Pieces</option>
-                </select>
-                <button type="button" class="remove-ingredient-btn" onclick="removeIngredient(this)">−</button>
-            `;
-        ingredientsList.appendChild(ingredientRow);
-      });
+<script>
+  const addIngredientButton = document.getElementById("add-ingredient-btn");
+  const ingredientsList = document.getElementById("ingredients-list");
 
-      function removeIngredient(button) {
-        button.parentElement.remove();
-      }
-      function addInstruction() {
-        const container = document.getElementById("instructionFields");
-        const div = document.createElement("div");
-        div.innerHTML = `
-                <input type="text" name="instructions" required>
-                <button type="button" class="add-button" onclick="removeField(this)">-</button>
-            `;
-        container.appendChild(div);
-      }
-    </script>
-  </body>
-</html>
+  addIngredientButton.addEventListener("click", () => {
+    const ingredientRow = document.createElement("div");
+    ingredientRow.className = "ingredient-row";
+
+    ingredientRow.innerHTML = `
+          
+          <input type="text" name="ingredient_quantity" placeholder="Quantity" required />
+          <select name="ingredient_measurement" required>
+              <option value="">Measurement</option>
+              <option value="grams">Grams</option>
+              <option value="kg">Kilograms</option>
+              <option value="ml">Milliliters</option>
+              <option value="liters">Liters</option>
+              <option value="cups">Cups</option>
+              <option value="tsp">Teaspoons</option>
+              <option value="tbsp">Tablespoons</option>
+              <option value="pcs">Pieces</option>
+          </select>
+          <input type="text" name="ingredient_name" placeholder="Ingredient Name" required />
+          <button type="button" class="remove-ingredient-btn" onclick="removeIngredient(this)" tabindex="-1">−</button>
+      `;
+
+    // Append the new row
+    ingredientsList.appendChild(ingredientRow);
+
+    // Automatically focus on the new "ingredient name" input
+    const newIngredientNameInput = ingredientRow.querySelector(
+      'input[name="ingredient_quantity"]'
+    );
+    newIngredientNameInput.focus();
+  });
+
+  function removeIngredient(button) {
+    button.parentElement.remove();
+  }
+
+  const form = document.getElementById("recipe-form");
+  const submitButton = document.getElementById("add-recipe-btn");
+
+  // Show confirmation dialog on form submission
+  form.addEventListener("submit", (event) => {
+    const confirmation = confirm(
+      "Are you sure you want to create this recipe?"
+    );
+    if (!confirmation) {
+      event.preventDefault(); // Prevent form submission if user cancels
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grim's Cookbook</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Grim's Cookbook</h1>
+    </header>
+    <div class="container">
+      <!-- Add New Recipe Button -->
+      <a href="{{ url_for('add_recipe') }}" class="add-recipe-btn"
+        >Add New Recipe</a
+      >
+
+      <div class="search-box">
+        <input type="text" placeholder="Search recipes..." id="recipeSearch" />
+        <button onclick="searchRecipes()">Search</button>
+      </div>
+      <div class="recent-recipes">
+        <h2>Top 10 Recently Accessed Recipes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Recipe Name</th>
+              <th>Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for recipe in recipes %}
+            <tr>
+              <td>{{ recipe.score }}</td>
+              <td>
+                <a href="{{ url_for('recipe', recipe_id=recipe['_id']) }}"
+                  >{{ recipe.title }}</a
+                >
+              </td>
+              <td>
+                <img
+                  src="{{ recipe.image }}"
+                  alt="{{ recipe.title }}"
+                  style="width: 100px; height: auto"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer>
+      <p>© 2024 Grim's Cookbook. All Rights Reserved.</p>
+    </footer>
+    <script>
+      function searchRecipes() {
+        const query = document.getElementById("recipeSearch").value;
+        alert(`Searching for: ${query}`);
+      }
+    </script>
+  </body>
+</html>
