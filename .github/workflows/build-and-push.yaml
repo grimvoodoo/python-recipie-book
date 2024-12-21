@@ -13,9 +13,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false # We'll re-auth below
-          fetch-depth: 0 # So we can see all tags
 
       - name: Configure Git
         run: |
