@@ -11,6 +11,17 @@ jobs:
       - name: check out code
         uses: actions/checkout@v3
 
+      - name: Determine Version
+        id: version
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "VERSION=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          else
+            # No tag available, fallback to something like 'dev' or a short SHA
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            echo "VERSION=${SHORT_SHA}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
         with:
@@ -29,5 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.repository_owner }}/cookbook:latest
+          tags: |
+            ${{ github.repository_owner }}/cookbook:latest
+            ${{ github.repository_owner }}/cookbook:${{ steps.version.outputs.VERSION }}
           file: ContainerFile
