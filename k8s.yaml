@@ -1,0 +1,47 @@
+# This file will deploy the cookbook into kubernetes
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cookbook
+spec:
+  ports:
+    - port: 5000
+      nodePort: 30500
+      name: cookbook
+  type: NodePort
+  selector:
+    app: cookbook
+
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: cookbook
+  labels:
+    app: cookbook
+spec:
+  selector:
+    matchLabels:
+      app: "cookbook"
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cookbook
+    spec:
+      containers:
+        - image: cookbook/cookbook
+          name: cookbook
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+              cpu: 1000m
+              memory: 1Gi
+          env:
+            - name: MONGO_URI
+              value: "mongodb://user:password@example.com:27017"
+          ports:
+            - containerPort: 5000
+              name: cookbook
