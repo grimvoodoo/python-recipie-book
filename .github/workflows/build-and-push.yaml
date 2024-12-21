@@ -49,11 +49,10 @@ jobs:
           echo "New tag: $NEW_TAG"
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
-      - name: Create new tag
-        uses: anothrNick/github-tag-action@v1.12.2
+      - name: Create Git Tag Action
+        uses: P4dr4/create-git-tag-action@v1.0.0
         with:
-          tag: ${{ steps.version.outputs.NEW_TAG }}
-          message: "New version"
+          tag_name: ${{ steps.version.outputs.NEW_TAG }}
 
       - name: Login to Docker Container Registry
         uses: docker/login-action@v3
