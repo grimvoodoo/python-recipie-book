@@ -29,7 +29,7 @@ jobs:
       - name: Fetch all tags
         run: |
           # Ensure we have all tags locally
-          git fetch --prune --unshallow --tags
+          git fetch --prune --tags
 
       - name: Bump Patch Version
         id: bump
