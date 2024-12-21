@@ -50,27 +50,10 @@ jobs:
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Create new tag
-        id: create_tag
-        uses: actions/github-script@v5
+        uses: anothrNick/github-tag-action@v1.12.2
         with:
-          script: |
-            const newTag = '${{ steps.version.outputs.new_tag }}'
-            const refName = `refs/tags/${newTag}`
-
-            console.log(`Creating tag '${refName}' at commit: '${context.sha}'`)
-
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: refName,
-              sha: context.sha
-            })
-
-            core.setOutput('tag_created', newTag)
-
-      - name: Print result
-        run: |
-          echo "Created new tag: ${{ steps.create_tag.outputs.tag_created }}"
+          tag: ${{ steps.version.outputs.NEW_TAG }}
+          message: "New version"
 
       - name: Login to Docker Container Registry
         uses: docker/login-action@v3
