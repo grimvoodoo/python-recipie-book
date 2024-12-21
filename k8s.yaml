@@ -3,23 +3,23 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cookbook
+  name: "cookbook"
 spec:
   ports:
     - port: 5000
       nodePort: 30500
-      name: cookbook
+      name: "cookbook"
   type: NodePort
   selector:
-    app: cookbook
+    app: "cookbook"
 
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cookbook
+  name: "cookbook"
   labels:
-    app: cookbook
+    app: "cookbook"
 spec:
   selector:
     matchLabels:
@@ -29,18 +29,18 @@ spec:
   template:
     metadata:
       labels:
-        app: cookbook
+        app: "cookbook"
     spec:
       containers:
-        - image: cookbook/cookbook
-          name: cookbook
+        - image: "cookbook/cookbook"
+          name: "cookbook"
           resources:
             limits:
-              cpu: 1000m
-              memory: 1Gi
+              cpu: "1000m"
+              memory: "1Gi"
           env:
-            - name: MONGO_URI
+            - name: "MONGO_URI"
               value: "mongodb://user:password@example.com:27017"
           ports:
             - containerPort: 5000
-              name: cookbook
+              name: "cookbook"
