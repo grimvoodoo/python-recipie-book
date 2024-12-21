@@ -1,0 +1,28 @@
+# Use a slimmed-down Python base image
+FROM python:3.11-slim
+
+# Create a working directory
+WORKDIR /app
+
+# Copy only the requirements file first (for efficient caching)
+COPY requirements.txt ./
+
+# Install your Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy only what's needed:
+    COPY app.py ./
+    COPY templates/ templates/
+    COPY static/ static/
+
+# Make sure the templates and static files are in the right place
+# If they are in subfolders like 'templates/' or 'static/', they
+# should be copied into the container accordingly. For example:
+# COPY templates/ /app/templates/
+# COPY static/ /app/static/
+
+# Expose the port (optional; helps documentation)
+EXPOSE 5000
+
+# Use Gunicorn to run Flask in production
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
