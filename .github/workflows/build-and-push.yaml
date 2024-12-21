@@ -21,7 +21,7 @@ jobs:
 
       - name: Authenticate with GitHub
         run: |
-          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git remote set-url origin "https://x-access-token:${{ secrets.GHCR_PAT }}@github.com/${{ github.repository }}.git"
 
       - name: Fetch all tags
         run: |
