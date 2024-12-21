@@ -7,8 +7,8 @@
   <table>
     <thead>
       <tr>
-        <th>Score</th>
-        <th>Serves</th>
+        <th class="score-col">Score</th>
+        <th class="serves-col">Serves</th>
         <th>Recipe Name</th>
         <th>Image</th>
       </tr>
@@ -16,8 +16,8 @@
     <tbody>
       {% for recipe in recipes %}
       <tr>
-        <td>{{ recipe.score }}</td>
-        <td>{{ recipe.serves }}</td>
+        <td class="score-col">{{ recipe.score }}</td>
+        <td class="serves-col">{{ recipe.serves }}</td>
         <td>
           <a href="{{ url_for('recipe', recipe_id=recipe['_id']) }}">
             {{ recipe.name }}
