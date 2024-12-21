@@ -36,7 +36,6 @@ spec:
           name: cookbook
           resources:
             limits:
-              nvidia.com/gpu: 1
               cpu: 1000m
               memory: 1Gi
           env:
