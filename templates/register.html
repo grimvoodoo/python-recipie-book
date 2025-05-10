@@ -1,0 +1,48 @@
+{% extends "header.html" %}
+{% block title %}Register – Grim's Cookbook{% endblock %}
+{% block content %}
+
+<h1>Create a New Account</h1>
+
+<div class="container">
+  <form method="POST" action="{{ url_for('register') }}">
+    {% if error %}
+      <div id="error-message" class="error-message">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <div class="form-group mb-3">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        required
+        placeholder="Choose a username"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        placeholder="Create a password"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary styled-button">
+        Register
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+
