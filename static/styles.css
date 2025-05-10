@@ -314,3 +314,37 @@ img {
     display: none;
   }
 }
+
+/* Error message styling */
+.error-message {
+  background-color: #e74c3c; /* Red background for errors */
+  color: #ffffff; /* White text color */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+/* ─── Fix checkbox alignment ─── */
+
+/* 1) Reset the width on just checkboxes & radios */
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;         /* undo the 100% width */
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;           /* clear the auto margins from full-width */
+}
+
+/* 2) Make their labels inline again, and nudge them over */
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  display: inline-block;       /* override your `label {display:block}` */
+  margin: 0 0 0 0.5rem;        /* little space to the left of the text */
+  vertical-align: middle;
+}
+
+/* 3) Force the whole group left-aligned (if needed) */
+.form-group {
+  text-align: left !important;
+}
